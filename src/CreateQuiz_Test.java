@@ -37,14 +37,14 @@ public class CreateQuiz_Test
         //Need to add login into quiztool app
         url = "http://pegasus.cs.virginia.edu/quiztool/login";
         driver.get(url);                // open the given url
-        driver.findElement(By.name("username")).sendKeys("admin");
-        driver.findElement(By.name("password")).sendKeys("frog1234");
+        driver.findElement(By.name("username")).sendKeys("professorM");
+        driver.findElement(By.name("password")).sendKeys("swtesting1");
         WebElement element = driver.findElement(By.xpath("(/html/body/div/div/form/div/button[@type='submit'])[1]"));
         element.click();
 
         //driver.findElement(By.linkText("Login")).click();      // Click Non-Netbadge login
         //driver.findElement(By.cssSelector("a[href*='long']")).click();
-        url = "http://pegasus.cs.virginia.edu/quiztool/createQuiz/3/";
+        url = "http://pegasus.cs.virginia.edu/quiztool/createQuiz/1/";
         driver.get(url);                // open the given url
     }
 
@@ -107,7 +107,7 @@ public class CreateQuiz_Test
         //element.click();
 
         //try { Thread.sleep(1000); } catch (InterruptedException e) { }// TODO Auto
-        assertTrue(driver.getPageSource().contains("CS 4970"));
+        assertTrue(driver.getPageSource().contains("CS 4501"));
     }
 
     @Test
