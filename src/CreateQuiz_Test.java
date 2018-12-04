@@ -37,8 +37,6 @@ public class CreateQuiz_Test
         //Need to add login into quiztool app
         url = "http://pegasus.cs.virginia.edu/quiztool/login";
         driver.get(url);                // open the given url
-
-
         driver.findElement(By.name("username")).sendKeys("admin");
         driver.findElement(By.name("password")).sendKeys("frog1234");
         WebElement element = driver.findElement(By.xpath("(/html/body/div/div/form/div/button[@type='submit'])[1]"));
@@ -252,7 +250,7 @@ public class CreateQuiz_Test
 
         // Check result
         // Page should give error message "Please fill out this field."
-        //assertTrue(driver.getPageSource().contains("Invalid duration"));
+        //assertTrue(driver.getPageSource().contains("Please fill out this field"));
         // But instead it accepts value
         assertTrue(driver.getPageSource().contains("Create a Quiz"));
     }
