@@ -34,7 +34,7 @@ public class CreateQuiz_Test
         driver = new ChromeDriver();    // create an instance of the web browser and open it
         System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver");
 
-        //Need to add login into quiztool app
+        //Login into quiztool app
         url = "http://pegasus.cs.virginia.edu/quiztool/login";
         driver.get(url);                // open the given url
         driver.findElement(By.name("username")).sendKeys("professorM");
@@ -42,8 +42,7 @@ public class CreateQuiz_Test
         WebElement element = driver.findElement(By.xpath("(/html/body/div/div/form/div/button[@type='submit'])[1]"));
         element.click();
 
-        //driver.findElement(By.linkText("Login")).click();      // Click Non-Netbadge login
-        //driver.findElement(By.cssSelector("a[href*='long']")).click();
+        // Go to createQuiz
         url = "http://pegasus.cs.virginia.edu/quiztool/createQuiz/1/";
         driver.get(url);                // open the given url
     }
