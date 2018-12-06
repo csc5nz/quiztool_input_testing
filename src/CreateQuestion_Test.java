@@ -13,6 +13,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;     // for Firefox
 import org.openqa.selenium.chrome.ChromeDriver;       // for chrome
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
@@ -25,7 +26,7 @@ import java.util.List;
  *   Test environment: Chrome Version 68, selenium 3.14.0, Java 8, ChromeDriver 2.42
  */
 
-public class CreateQuiz_Test
+public class CreateQuestion_Test
 {
     private WebDriver driver;
     //private String login_url = "http://pegasus.cs.virginia.edu/quiztool";
@@ -46,45 +47,69 @@ public class CreateQuiz_Test
         element.click();
 
         // Go to createQuiz
-        url = "http://pegasus.cs.virginia.edu/quiztool/createQuiz/1/";
+        url = "http://pegasus.cs.virginia.edu/quiztool/create_additional_questions/126/16";
         driver.get(url);                // open the given url
     }
 
     @After
     public void teardown()
     {
+        // Delete question if there is a question available to delete
+        if (!driver.findElement(By.linkText("Delete")).equals(Void.TYPE)) {
+            try { Thread.sleep(1000); } catch (InterruptedException e) { }// TODO Auto
+            driver.findElement(By.linkText("Delete")).click();
+            try { Thread.sleep(1000); } catch (InterruptedException e) { }// TODO Auto
+            driver.switchTo().alert().accept();
+            try { Thread.sleep(1000); } catch (InterruptedException e) { }// TODO Auto
+        }
         driver.quit();                  // close the browser
     }
 
     @Test
     public void test_openURL()
     {
-        assertTrue(driver.getPageSource().contains("Create a Quiz"));	// check if we are on the right page
+        assertTrue(driver.getPageSource().contains("Add Questions"));	// check if we are on the right page
     }
 
     @Test
     public void test_Base()     // test case #1
     {
         // Fill input fields
-        driver.findElement(By.name("quiz_name")).clear();
-        driver.findElement(By.name("quiz_name")).sendKeys("a");
-        driver.findElement(By.name("duration")).clear();
-        driver.findElement(By.name("duration")).sendKeys("1");
-        driver.findElement(By.name("open_date")).clear();
-        driver.findElement(By.name("open_date")).sendKeys("11/14/2018 00:00");
-        driver.findElement(By.name("due_date")).clear();
-        driver.findElement(By.name("due_date")).sendKeys("11/14/2018 00:00");
-        driver.findElement(By.cssSelector("body")).click();     // Click on the background to deselect the datepicker
-        driver.findElement(By.name("number_of_allowed_submissions")).clear();
-        driver.findElement(By.name("number_of_allowed_submissions")).sendKeys("1");
+        driver.findElement(By.name("question_text")).clear();
+        driver.findElement(By.name("question_text")).sendKeys("a");
+        driver.findElement(By.name("question_points")).clear();
+        driver.findElement(By.name("question_points")).sendKeys("1");
+        driver.findElement(By.name("question_starting_points")).clear();
+        driver.findElement(By.name("question_starting_points")).sendKeys("1");
+
+        // Checkbox
+        if ( !driver.findElement(By.name("randomize_answers")).isSelected() )
+        {
+            driver.findElement(By.name("randomize_answers")).click();
+        }
+
+        // Dropdown
+        Select dropdown = new Select(driver.findElement(By.name("question_type")));
+        dropdown.selectByVisibleText("Multiple Choice");
+
+        // Fill input fields
+        driver.findElement(By.name("answer_0")).clear();
+        driver.findElement(By.name("answer_0")).sendKeys("a");
+        driver.findElement(By.name("answer_weight_0")).clear();
+        driver.findElement(By.name("answer_weight_0")).sendKeys("1");
+
+        // Click background to make sure all java scripts finish running
         driver.findElement(By.cssSelector("body")).click();     // Click on the background to deselect the input field
 
         // Submit
-        WebElement element = driver.findElement(By.xpath("(/html/body/div[1]/div/div[2]/form/div/button[@type='submit'])[1]"));
+        WebElement element = driver.findElement(By.xpath("(/html/body/div[1]/div/div[2]/form/div[2]/button[@type='submit'])[1]"));
         element.click();
 
+        // Accept alert popup
+        driver.switchTo().alert().accept();
+
         // Check result
-        assertTrue(driver.getPageSource().contains("Question text"));
+        assertTrue(driver.getPageSource().contains("Q: a"));
 
     }
 
