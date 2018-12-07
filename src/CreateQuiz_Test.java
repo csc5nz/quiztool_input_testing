@@ -258,6 +258,98 @@ public class CreateQuiz_Test
     }
 
 
+    @Test
+    public void test_case8()     // test case #1
+    {
+        // Fill input fields
+        driver.findElement(By.name("quiz_name")).clear();
+        driver.findElement(By.name("quiz_name")).sendKeys("a");
+        driver.findElement(By.name("duration")).clear();
+        driver.findElement(By.name("duration")).sendKeys("1");
+        driver.findElement(By.name("open_date")).clear();
+        driver.findElement(By.name("open_date")).sendKeys("11/14/2018 00:00");
+        driver.findElement(By.name("due_date")).clear();
+        driver.findElement(By.name("due_date")).sendKeys("11/14/2018 00:00");
+        driver.findElement(By.cssSelector("body")).click();     // Click on the background to deselect the datepicker
+        driver.findElement(By.name("number_of_allowed_submissions")).clear();
+        driver.findElement(By.name("number_of_allowed_submissions")).sendKeys("1");
+        driver.findElement(By.cssSelector("body")).click();     // Click on the background to deselect the input field
+
+        // Submit
+        WebElement element = driver.findElement(By.xpath("(/html/body/div[1]/div/div[2]/form/div/button[@type='submit'])[1]"));
+        element.click();
+
+        // Browser feature
+        driver.navigate().back();
+
+        // Check result (should go back to creat quiz page and quiz values should be display)
+        assertTrue(driver.getPageSource().contains("Create a Quiz"));
+        assertEquals("a", driver.findElement(By.name("quiz_name")).getAttribute("value"));
+        assertEquals("1", driver.findElement(By.name("duration")).getAttribute("value"));
+        assertEquals("11/14/2018 00:00", driver.findElement(By.name("open_date")).getAttribute("value"));
+        assertEquals("11/14/2018 00:00", driver.findElement(By.name("due_date")).getAttribute("value"));
+        assertEquals("1", driver.findElement(By.name("number_of_allowed_submissions")).getAttribute("value"));
+    }
+
+    @Test
+    public void test_case9()     // test case #1
+    {
+        // Fill input fields
+        driver.findElement(By.name("quiz_name")).clear();
+        driver.findElement(By.name("quiz_name")).sendKeys("a");
+        driver.findElement(By.name("duration")).clear();
+        driver.findElement(By.name("duration")).sendKeys("1");
+        driver.findElement(By.name("open_date")).clear();
+        driver.findElement(By.name("open_date")).sendKeys("11/14/2018 00:00");
+        driver.findElement(By.name("due_date")).clear();
+        driver.findElement(By.name("due_date")).sendKeys("11/14/2018 00:00");
+        driver.findElement(By.cssSelector("body")).click();     // Click on the background to deselect the datepicker
+        driver.findElement(By.name("number_of_allowed_submissions")).clear();
+        driver.findElement(By.name("number_of_allowed_submissions")).sendKeys("1");
+        driver.findElement(By.cssSelector("body")).click();     // Click on the background to deselect the input field
+
+        // Submit
+        WebElement element = driver.findElement(By.xpath("(/html/body/div[1]/div/div[2]/form/div/button[@type='submit'])[1]"));
+        element.click();
+
+        // Browser feature
+        driver.navigate().forward();
+
+        // Check result (should stay in create questions for quiz "a")
+        assertTrue(driver.getPageSource().contains("Create Questions for (a)"));
+
+    }
+
+    @Test
+    public void test_case10()     // test case #1
+    {
+        // Fill input fields
+        driver.findElement(By.name("quiz_name")).clear();
+        driver.findElement(By.name("quiz_name")).sendKeys("a");
+        driver.findElement(By.name("duration")).clear();
+        driver.findElement(By.name("duration")).sendKeys("1");
+        driver.findElement(By.name("open_date")).clear();
+        driver.findElement(By.name("open_date")).sendKeys("11/14/2018 00:00");
+        driver.findElement(By.name("due_date")).clear();
+        driver.findElement(By.name("due_date")).sendKeys("11/14/2018 00:00");
+        driver.findElement(By.cssSelector("body")).click();     // Click on the background to deselect the datepicker
+        driver.findElement(By.name("number_of_allowed_submissions")).clear();
+        driver.findElement(By.name("number_of_allowed_submissions")).sendKeys("1");
+        driver.findElement(By.cssSelector("body")).click();     // Click on the background to deselect the input field
+
+        // Submit
+        WebElement element = driver.findElement(By.xpath("(/html/body/div[1]/div/div[2]/form/div/button[@type='submit'])[1]"));
+        element.click();
+
+        // Browser feature
+        driver.navigate().refresh();
+
+        // Check result (should stay in create questions for quiz "a")
+        assertTrue(driver.getPageSource().contains("Create Questions for (a)"));
+
+    }
+
+
 }
 
 
